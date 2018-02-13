@@ -20,7 +20,6 @@ def sleep():
 
 
 class Robot(object):
-    """A Robot"""
 
     def talk_0(self):
         print("Hello, my name is RX-480, and I'm a robot.")
