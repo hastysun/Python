@@ -1,4 +1,4 @@
-## Unit 5 Project - Gas Pump
+## Unit 5 Project - Gas Pump V1
 ## Computer Programming II - Gavin Weiss
 
 
@@ -6,6 +6,7 @@
 import time
 import random
 import simpleguitk as simplegui
+from simpleguitk import *
 
 
 ##> Define Global Variables
@@ -14,7 +15,8 @@ price = 0
 
 StationLabel = "Shell"
 GallonLabel = "Gallons: "
-PriceLabel= "Price: "
+PriceLabel = "Price: "
+WelcomeMessage = "Welcome, please select a fuel type."
 
 
 ##> Define Helper Functions
@@ -75,18 +77,18 @@ def Stop():
 ##> Define Event Handlers
 def draw(canvas):
 
-	canvas.draw_text(str(gallons), [120, 100], 12, "Grey", "Monospace")
-	canvas.draw_text(str(price), [120, 150], 12, "Green", "Monospace")
+        canvas.draw_text(str(gallons), [120, 125], 12, "Grey", "Monospace")
+        canvas.draw_text(str(price), [120, 175], 12, "Green", "Monospace")
 	
-	canvas.draw_text(StationLabel, [20, 50], 14, "Yellow", "Monospace")
-	canvas.draw_text(GallonLabel, [20, 100], 12, "Grey", "Monospace")
-	canvas.draw_text(PriceLabel, [20, 150], 12, "Green", "Monospace")
-	
+        canvas.draw_text(StationLabel, [20, 50], 14, "Yellow", "Monospace")
+        canvas.draw_text(WelcomeMessage, [20, 75], 12, "Blue", "Monospace")
+        canvas.draw_text(GallonLabel, [20, 125], 12, "Grey", "Monospace")
+        canvas.draw_text(PriceLabel, [20, 175], 12, "Green", "Monospace")
 
 
 
 ##> Create Frame
-frame = simplegui.create_frame("SimpleGUI", 300, 200)
+frame = simplegui.create_frame("SimpleGUI", 400, 200)
 GallonTimer = simplegui.create_timer(500, GallonInc)
 StandardPriceTimer = simplegui.create_timer(500, StandardFuel)
 PremiumPriceTimer = simplegui.create_timer(500, PremiumFuel)
