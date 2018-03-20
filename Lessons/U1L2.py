@@ -1,6 +1,10 @@
 ## Unit 1 Lesson 2 - More with Strings
 ## Computer Programming II - Gavin Weiss
 
+## Libraries
+import time
+import random
+
 ## Code
 
 # We can use escape sequences to give us
@@ -9,17 +13,17 @@
 print("I like programming because I am a nerd")
 # \n skips a line
 
-print("\nI like to skip lines")
+print("\n I like to skip lines")
 # \n must go inside quotes
 
-print("\n\nI like to skip two lines")
+print("\n \n I like to skip two lines")
 
 # \t is a horizontal tab
 print("\n")
 
 print("\t I like to make horizontal tabs")
 
-print("\n\t I like to skip lines and make horizontal tabs")
+print("\n \t I like to skip lines and make horizontal tabs")
 
 # We have escape sequences that help us add quotes to strings
 

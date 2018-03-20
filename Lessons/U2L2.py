@@ -26,4 +26,4 @@ elif grade_level == "12":
 
 else:
 
-    print("You're not even in high school,get outta here.")
+    print("You're not even in high school, get outta here.")
