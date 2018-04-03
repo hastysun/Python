@@ -208,10 +208,19 @@ Spacer.set_text("")
 
 
 ## Init Event Handlers
+
 frame.set_draw_handler(draw)
-StandardFuelButton = frame.add_button("Standard - $2.49", StandardFuel, 50)
-PlusFuelButton = frame.add_button("Plus - $3.75", PlusFuel, 50)
-PremiumFuelButton = frame.add_button("Premium - $4.29", PremiumFuel, 50)
+
+# StandardFuelButton = frame.add_button("Standard - $2.49", StandardFuel, 60)
+# PlusFuelButton = frame.add_button("Plus - $3.75", PlusFuel, 60)
+# PremiumFuelButton = frame.add_button("Premium - $4.29", PremiumFuel, 60)
+
+if FuelType == 0:
+
+    StandardFuelButton = frame.add_button("Standard - $2.49", StandardFuel, 60)
+    PlusFuelButton = frame.add_button("Plus - $3.75", PlusFuel, 60)
+    PremiumFuelButton = frame.add_button("Premium - $4.29", PremiumFuel, 60)
+
 
 SpacerButton = frame.add_button("", Spacer, 50)
 
