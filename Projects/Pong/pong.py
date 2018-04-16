@@ -1,4 +1,4 @@
-## Unit 5 Project - Pong 
+## Unit 5 Lesson 8 - Pong Game
 ## Computer Programming II - Gavin Weiss
 
 
@@ -8,115 +8,116 @@ import random
 import simpleguitk as simplegui
 
 
-## Velocity
-# Velocity is the speed of an object in a certain direction
-# When coding with the velocity of an object, 
-# we must deal with it's X and Y coordinates seperately
+## Global Variables
+CanvasWidth = 400
+CanvasHeight = 400
 
+PaddlePosition = [10, 200]
 
-##  Global Variables
-CanvasWidth = 300
-CanvasHeight = 300
-BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
-BallRadius = 15
-BallVelocity = 10
-StartBall = 0
-PongLabel = "Welcome to Pong"
+PaddleHeight = 10
+PaddleWidth = 4
+PaddleColor = "Grey"
 
+X_Velocity = 0
+Y_Velocity = 0
 
-## Event Handlers
-def BallStart():
-
-	global StartBall
-
-	StartBall = 1
-
-	return
-
-
-def BallReset():
-
-	global StartBall
-	global BallPosition
-
-	BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
-
-	StartBall = 0
-
-	return
-
-
+        
+## Main
 def KeyDown(key):
 
-	global BallPosition
-	global BallVelocity
+    global CanvasHeight
+    global CanvasWidth
+    global PaddlePosition
+    global X_Velocity
+    global Y_Velocity
 
-	if key == simplegui.KEY_MAP['down']:
+    
+    Acceleration = 1
 
-		BallPosition[1] = BallPosition[1] + BallVelocity
+    if key == simplegui.KEY_MAP['down']:
 
-	elif key == simplegui.KEY_MAP['up']:
+       Y_Velocity = Y_Velocity - Acceleration
 
-		BallPosition[1] = BallPosition[1] - BallVelocity
+    elif key == simplegui.KEY_MAP['up']:
 
-	elif key == simplegui.KEY_MAP['right']:
+       Y_Velocity = Y_Velocity + Acceleration
 
-		BallPosition[0] = BallPosition[0] + BallVelocity
 
-	elif key == simplegui.KEY_MAP['left']:
+    return Acceleration
 
-		BallPosition[0] = BallPosition[0] - BallVelocity
+
+
+def KeyUp(key):
+
+    global CanvasHeight
+    global CanvasWidth
+    global PaddlePosition
+    global X_Velocity
+    global Y_Velocity
+    global Acceleration
+
+    
+    Acceleration = 0
+
+    if key == simplegui.KEY_MAP['down']:
+
+            X_Velocity = X_Velocity - Acceleration
+
+    elif key == simplegui.KEY_MAP['up']:
+
+            X_Velocity = X_Velocity - Acceleration
+
+
+    return
+
 
 
 def draw(canvas):
 
-	global BallPosition
-	global BallVelocity
-	global BallRadius
-	global StartBall
+    global CanvasWidth
+    global CanvasHeight
+    global PointA
+    global PointB
+    global PointC
+    global PointD
+    global PaddleHeight
+    global PaddleWidth
+    global PaddlePosition
+    global X_Velocity
+    global Y_Velocity
+    global PaddleWidth
+    global PaddleColor
 
-	canvas.draw_circle(BallPosition, BallRadius, 3, "White", "Grey")
+    PaddlePosition[0] = PaddlePosition[0] + X_Velocity
+    PaddlePosition[1] = PaddlePosition[1] - Y_Velocity
+    
+   # canvas.draw_polygon([PointA, PointB, PointC, PointD], PaddleWidth, "Grey")
+    canvas.draw_polygon([
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60],
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
+                        PaddleWidth, PaddleColor)
 
-	if StartBall == 1:
-		
-		BallPosition[0] = BallPosition[0] + BallVelocity[0]
-		BallPosition[1] = BallPosition[1] + BallVelocity[1]
-
-		# The "[0]" represents the X coordinate
-		# The "[1]" represents the Y coordinate
-		
-		canvas.draw_circle(BallPosition, BallRadius, 3, "White", "Grey")
-
-
-	if BallPosition == [300, 300]:
-
-		BallVelocity = [-2, -2]
+    
+    # Paddle Gutter
+    canvas.draw_polygon([(40, 0), (40, 400)], 4, "Grey")
 
 
-	if BallPosition == [0, 0]:
-		
-		BallVelocity = [2, 2]
+    # Borders
+    canvas.draw_polygon([(0, 0), (0, 400)], 10, "Grey")
+    canvas.draw_polygon([(400, 0), (0, 0)], 10, "Grey")
+    canvas.draw_polygon([(400, 400), (400, 0)], 5, "Grey")
+    canvas.draw_polygon([(0, 400), (400, 400)], 5, "Grey")
+
 
 
 ## Frame
 frame = simplegui.create_frame("SimpleGUI", CanvasWidth, CanvasHeight)
 
-GameTitle = frame.add_label("Welcome to Pong")
-
-Spacer = frame.add_label("")
-
-
-## Registered Event Handlers
-frame.add_button("Start", BallStart, 50)
-frame.add_button("Reset", BallReset, 50)
-
-
-# frame.add_button("+ Velocity", IncreaseVelocity, 50)
-# frame.add_button("- Velocity", DecreaseVelocity, 50)
-
-frame.set_keydown_handler(KeyDown)
-frame.set_draw_handler(draw)
-
 
 ## Init
+frame.set_keydown_handler(KeyDown)
+frame.set_keyup_handler(KeyUp)
+frame.set_draw_handler(draw)
 frame.start()
