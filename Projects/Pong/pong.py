@@ -17,7 +17,7 @@ CanvasHeight = 400
 # Ball
 BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
 BallRadius = 10
-BallVelocity = [-4, 3]
+BallVelocity = [-3, 2]
 
 # Paddle
 PaddlePosition = [5, 200]
@@ -98,9 +98,7 @@ def draw(canvas):
     global BallRadius
 
 
-    BallPosition[0] = BallPosition[0] + BallVelocity[0]
-    BallPosition[1] = BallPosition[1] + BallVelocity[1]
-
+    # Draw the ball
     canvas.draw_circle(BallPosition, BallRadius, 2, "Grey", "Black")
 
 
@@ -128,11 +126,16 @@ def draw(canvas):
 	    BallVelocity[1] = - BallVelocity[1]
 
 
+    # Ball
+    BallPosition[0] = BallPosition[0] + BallVelocity[0]
+    BallPosition[1] = BallPosition[1] + BallVelocity[1]
 
+    # Paddle
     PaddlePosition[0] = PaddlePosition[0] + X_Velocity
     PaddlePosition[1] = PaddlePosition[1] - Y_Velocity
+
     
-   # canvas.draw_polygon([PointA, PointB, PointC, PointD], PaddleWidth, "Grey")
+    # Draw the paddle
     canvas.draw_polygon([
 			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
 			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
@@ -142,11 +145,12 @@ def draw(canvas):
 
     if PaddlePosition[1] == 60:
 
-        Y_Velocity = -2
+        Y_Velocity = 0
 
+    
     if PaddlePosition[1] == 410:
     
-        Y_Velocity = 2
+        Y_Velocity = 0
 
     
     # Paddle Gutter
