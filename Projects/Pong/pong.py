@@ -9,19 +9,25 @@ import simpleguitk as simplegui
 
 
 ## Global Variables
+
+# Canvas
 CanvasWidth = 400
 CanvasHeight = 400
 
-PaddlePosition = [10, 200]
+# Ball
+BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
+BallRadius = 10
+BallVelocity = [-4, 3]
 
+# Paddle
+PaddlePosition = [5, 200]
 PaddleHeight = 10
 PaddleWidth = 4
 PaddleColor = "Grey"
-
 X_Velocity = 0
 Y_Velocity = 0
 
-        
+	
 ## Main
 def KeyDown(key):
 
@@ -36,11 +42,15 @@ def KeyDown(key):
 
     if key == simplegui.KEY_MAP['down']:
 
-       Y_Velocity = Y_Velocity - Acceleration
+       Y_Velocity = -2
 
     elif key == simplegui.KEY_MAP['up']:
 
-       Y_Velocity = Y_Velocity + Acceleration
+       Y_Velocity = 2
+
+    elif key == simplegui.KEY_MAP['space']:
+        
+        Y_Velocity = 0
 
 
     return Acceleration
@@ -61,11 +71,11 @@ def KeyUp(key):
 
     if key == simplegui.KEY_MAP['down']:
 
-            X_Velocity = X_Velocity - Acceleration
+        Y_Velocity = 0
 
     elif key == simplegui.KEY_MAP['up']:
 
-            X_Velocity = X_Velocity - Acceleration
+        Y_Velocity = 0
 
 
     return
@@ -76,10 +86,6 @@ def draw(canvas):
 
     global CanvasWidth
     global CanvasHeight
-    global PointA
-    global PointB
-    global PointC
-    global PointD
     global PaddleHeight
     global PaddleWidth
     global PaddlePosition
@@ -87,21 +93,64 @@ def draw(canvas):
     global Y_Velocity
     global PaddleWidth
     global PaddleColor
+    global BallPosition
+    global BallVelocity
+    global BallRadius
+
+
+    BallPosition[0] = BallPosition[0] + BallVelocity[0]
+    BallPosition[1] = BallPosition[1] + BallVelocity[1]
+
+    canvas.draw_circle(BallPosition, BallRadius, 2, "Grey", "Black")
+
+
+    # Bouncing off the left wall
+    if BallPosition[0] <= BallRadius:
+
+	    BallVelocity[0] = - BallVelocity[0]
+
+
+    # Bouncing off the right wall
+    if BallPosition[0] >= CanvasWidth - BallRadius:
+
+	    BallVelocity[0] = - BallVelocity[0]
+
+
+    # Bouncing off the top wall
+    if BallPosition[1] <= BallRadius:
+
+	    BallVelocity[1] = - BallVelocity[1]
+
+
+    # Bouncing off the bottom wall
+    if BallPosition[1] >= CanvasHeight - BallRadius:
+
+	    BallVelocity[1] = - BallVelocity[1]
+
+
 
     PaddlePosition[0] = PaddlePosition[0] + X_Velocity
     PaddlePosition[1] = PaddlePosition[1] - Y_Velocity
     
    # canvas.draw_polygon([PointA, PointB, PointC, PointD], PaddleWidth, "Grey")
     canvas.draw_polygon([
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60],
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
-                        PaddleWidth, PaddleColor)
+			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+			[PaddlePosition[0] + 10, PaddlePosition[1] - 60],
+			[PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
+			PaddleWidth, PaddleColor)
+
+    if PaddlePosition[1] == 60:
+
+        Y_Velocity = -2
+
+    if PaddlePosition[1] == 410:
+    
+        Y_Velocity = 2
 
     
     # Paddle Gutter
-    canvas.draw_polygon([(40, 0), (40, 400)], 4, "Grey")
+    canvas.draw_polygon([(30, 0), (30, 400)], 4, "Grey")
 
 
     # Borders
