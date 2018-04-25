@@ -13,6 +13,7 @@ import simpleguitk as simplegui
 # Canvas
 CanvasWidth = 400
 CanvasHeight = 400
+Score = 0
 
 # Ball
 BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
@@ -21,13 +22,13 @@ BallVelocity = [-3, 2]
 
 # Paddle
 PaddlePosition = [5, 200]
-PaddleHeight = 10
-PaddleWidth = 4
+PaddleHeight = 5
+PaddleWidth = 5
 PaddleColor = "Grey"
 X_Velocity = 0
 Y_Velocity = 0
 
-	
+        
 ## Main
 def KeyDown(key):
 
@@ -96,34 +97,43 @@ def draw(canvas):
     global BallPosition
     global BallVelocity
     global BallRadius
+    global Score
 
 
     # Draw the ball
-    canvas.draw_circle(BallPosition, BallRadius, 2, "Grey", "Black")
+    canvas.draw_circle(BallPosition, BallRadius, 1, "Grey", "Black")
 
 
-    # Bouncing off the left wall
-    if BallPosition[0] <= BallRadius:
+    # Bouncing off the paddle
+    if BallPosition[0] <= PaddlePosition[0] + PaddleWidth + BallRadius:
 
-	    BallVelocity[0] = - BallVelocity[0]
+            BallVelocity[0] = - BallVelocity[0]
+            print("Paddle Collision")
+
+
+    # Left wall
+    if BallPosition[0] == CanvasWidth - BallRadius:
+
+            BallVelocity[0] = - BallVelocity[0]
 
 
     # Bouncing off the right wall
     if BallPosition[0] >= CanvasWidth - BallRadius:
 
-	    BallVelocity[0] = - BallVelocity[0]
+            BallVelocity[0] = - BallVelocity[0]
 
 
     # Bouncing off the top wall
     if BallPosition[1] <= BallRadius:
 
-	    BallVelocity[1] = - BallVelocity[1]
+            BallVelocity[1] = - BallVelocity[1]
 
 
     # Bouncing off the bottom wall
     if BallPosition[1] >= CanvasHeight - BallRadius:
 
-	    BallVelocity[1] = - BallVelocity[1]
+            BallVelocity[1] = - BallVelocity[1]
+
 
 
     # Ball
@@ -137,11 +147,11 @@ def draw(canvas):
     
     # Draw the paddle
     canvas.draw_polygon([
-			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
-			[PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
-			[PaddlePosition[0] + 10, PaddlePosition[1] - 60],
-			[PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
-			PaddleWidth, PaddleColor)
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60],
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
+                        PaddleWidth, PaddleColor)
 
     if PaddlePosition[1] == 60:
 
@@ -154,7 +164,6 @@ def draw(canvas):
 
     
     # Paddle Gutter
-    canvas.draw_polygon([(30, 0), (30, 400)], 4, "Grey")
 
 
     # Borders
