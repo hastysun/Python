@@ -18,7 +18,7 @@ Score = 0
 # Ball
 BallPosition = [CanvasWidth / 2, CanvasHeight / 2]
 BallRadius = 10
-BallVelocity = [-3, 2]
+BallVelocity = [-1, 2]
 
 # Paddle
 PaddlePosition = [5, 200]
@@ -41,17 +41,13 @@ def KeyDown(key):
     
     Acceleration = 1
 
-    if key == simplegui.KEY_MAP['down']:
+    if key == simplegui.KEY_MAP['j']:
 
        Y_Velocity = -2
 
-    elif key == simplegui.KEY_MAP['up']:
+    elif key == simplegui.KEY_MAP['k']:
 
        Y_Velocity = 2
-
-    elif key == simplegui.KEY_MAP['space']:
-        
-        Y_Velocity = 0
 
 
     return Acceleration
@@ -70,11 +66,11 @@ def KeyUp(key):
     
     Acceleration = 0
 
-    if key == simplegui.KEY_MAP['down']:
+    if key == simplegui.KEY_MAP['j']:
 
         Y_Velocity = 0
 
-    elif key == simplegui.KEY_MAP['up']:
+    elif key == simplegui.KEY_MAP['k']:
 
         Y_Velocity = 0
 
@@ -104,17 +100,18 @@ def draw(canvas):
     canvas.draw_circle(BallPosition, BallRadius, 1, "Grey", "Black")
 
 
-    # Bouncing off the paddle
-    if BallPosition[0] <= PaddlePosition[0] + PaddleWidth + BallRadius:
+
+    if BallPosition[0] == PaddlePosition[0] + BallRadius + PaddleWidth:
 
             BallVelocity[0] = - BallVelocity[0]
-            print("Paddle Collision")
+            print("Collision")
+
 
 
     # Left wall
-    if BallPosition[0] == CanvasWidth - BallRadius:
+    if BallPosition[0] <= 10:
 
-            BallVelocity[0] = - BallVelocity[0]
+            print("Lost")
 
 
     # Bouncing off the right wall
