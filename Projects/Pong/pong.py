@@ -101,17 +101,25 @@ def draw(canvas):
 
 
 
-    if BallPosition[0] == PaddlePosition[0] + BallRadius + PaddleWidth:
+    # Bouncing off the paddle
+    # This takes care of X coordinates 
+    if BallPosition[0] - BallRadius <= PaddlePosition[0] + PaddleWidth / 2:
 
-            BallVelocity[0] = - BallVelocity[0]
-            print("Collision")
+            if BallPosition[1] - BallRadius < PaddlePosition[1] + PaddleHeight / 2 and BallPosition[0] + BallRadius > PaddlePosition[0] + PaddleHeight / 2:
+
+                BallVelocity[0] = - BallVelocity[0]
+                Score = Score + 1
+                ScoreLabel.set_text(Score)
+                print("Score")
 
 
 
     # Left wall
     if BallPosition[0] <= 10:
 
-            print("Lost")
+        print("Game Over")
+        Score = 0
+        ScoreLabel.set_text(Score)
 
 
     # Bouncing off the right wall
@@ -173,6 +181,7 @@ def draw(canvas):
 
 ## Frame
 frame = simplegui.create_frame("SimpleGUI", CanvasWidth, CanvasHeight)
+ScoreLabel = frame.add_label("   ")
 
 
 ## Init
