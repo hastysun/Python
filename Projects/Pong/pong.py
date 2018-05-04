@@ -22,7 +22,7 @@ BallVelocity = [-1, 2]
 
 # Paddle
 PaddlePosition = [5, 200]
-PaddleHeight = 5
+PaddleHeight = 10
 PaddleWidth = 5
 PaddleColor = "Grey"
 X_Velocity = 0
@@ -105,21 +105,24 @@ def draw(canvas):
     # This takes care of X coordinates 
     if BallPosition[0] - BallRadius <= PaddlePosition[0] + PaddleWidth / 2:
 
-            if BallPosition[1] - BallRadius < PaddlePosition[1] + PaddleHeight / 2 and BallPosition[0] + BallRadius > PaddlePosition[0] + PaddleHeight / 2:
+        if BallPosition[1] + BallRadius < PaddlePosition[1] + PaddleHeight / 2: 
+                
+            if BallPosition[0] + BallRadius > PaddlePosition[0] + PaddleHeight / 2:
 
-                BallVelocity[0] = - BallVelocity[0]
+                BallVelocity[0] = - BallVelocity[0] 
                 Score = Score + 1
                 ScoreLabel.set_text(Score)
                 print("Score")
 
 
 
+
     # Left wall
-    if BallPosition[0] <= 10:
+    if BallPosition[0] == 0: 
 
         print("Game Over")
         Score = 0
-        ScoreLabel.set_text(Score)
+        ScoreLabel.set_text("Game Over")
 
 
     # Bouncing off the right wall
@@ -154,8 +157,8 @@ def draw(canvas):
     canvas.draw_polygon([
                         [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
                         [PaddlePosition[0] + 10, PaddlePosition[1] - 10], 
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60],
-                        [PaddlePosition[0] + 10, PaddlePosition[1] - 60]],
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 50],
+                        [PaddlePosition[0] + 10, PaddlePosition[1] - 50]],
                         PaddleWidth, PaddleColor)
 
     if PaddlePosition[1] == 60:
